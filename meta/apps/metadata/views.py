@@ -25,7 +25,7 @@ def institution(request):
 
 @login_required
 def edit_institution(request, id=None):
-    if id:
+    if id is not None:
         institution = Institution.objects.get(pk=id)
         form = InstitutionForm(instance=institution)
         if not institution in request.user.profile.institution.all():
@@ -33,7 +33,7 @@ def edit_institution(request, id=None):
     else:
         form = InstitutionForm()
     if request.method == "POST":
-        if id:
+        if id is not None:
             institution = Institution.objects.get(pk=id)
             form = InstitutionForm(request.POST, instance=institution)
         else:
@@ -48,7 +48,7 @@ def edit_institution(request, id=None):
 @login_required
 def contact(request, id=None):
     institutions = request.user.profile.institution.all()
-    if id:
+    if id is not None:
         contact = Contact.objects.get(pk=id)
         form = ContactForm(instance=contact)
         form.fields["institution"].queryset = institutions
@@ -58,7 +58,7 @@ def contact(request, id=None):
         form = ContactForm()
         form.fields["institution"].queryset = institutions
     if request.method == "POST":
-        if id:
+        if id is not None:
             contact = Contact.objects.get(pk=id)
             form = ContactForm(request.POST, instance=contact)
             if not contact.institution in request.user.profile.institution.all():
@@ -73,7 +73,7 @@ def contact(request, id=None):
 @login_required
 def location(request, id=None):
     institutions = request.user.profile.institution.all()
-    if id:
+    if id is not None:
         location = Location.objects.get(pk=id)
         form = LocationForm(instance=location)
         form.fields["institution"].queryset = institutions
@@ -83,7 +83,7 @@ def location(request, id=None):
         form = LocationForm()
         form.fields["institution"].queryset = institutions
     if request.method == "POST":
-        if id:
+        if id is not None:
             location = Location.objects.get(pk=id)
             form = LocationForm(request.POST, instance=location)
             if not location.institution in request.user.profile.institution.all():
