@@ -1,4 +1,5 @@
-from django.conf.urls.defaults import patterns, include, url
+from django.conf.urls import patterns, include, url
+from django.views.generic import TemplateView
 from django.contrib.auth.views import login, logout
 from tastypie.api import Api
 from api_v1 import InstitutionResource as InstitutionResource_v1
@@ -28,8 +29,8 @@ urlpatterns = patterns('',
     (r'^contact/(?P<id>[0-9]+)$',           'apps.metadata.views.contact'),
     (r'^contact/(?P<id>[0-9]+)/delete$',    'apps.metadata.views.delete_contact'),
     (r'^institution.xml$',                  'apps.metadata.views.metadata'),
-    (r'^developer/api',                     'django.views.generic.simple.direct_to_template', {'template': 'api.html'}),
-    (r'^embed',                             'django.views.generic.simple.direct_to_template', {'template': 'embed.html'}),
+    (r'^developer/api',                     TemplateView.as_view(template_name='api.html')),
+    (r'^embed',                             TemplateView.as_view(template_name='embed.html')),
     (r'^api/',                              include(v1_api.urls)),
     url(r'^admin/',                         include(admin.site.urls)),
     (r'^accounts/login-federated/$',        'apps.auth.views.saml_login'),
